@@ -1,0 +1,14 @@
+.project {
+  column-count: 3;
+  column-gap: 0;
+}
+
+.img {
+  box-sizing: border-box;
+  padding: 2%;
+  width: 100%;
+}
+
+.img_wrapper {
+  display: block;
+}
