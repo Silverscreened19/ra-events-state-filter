@@ -3,13 +3,13 @@ import "./Toolbar.css";
 function Toolbar({ selected, filters, onSelectFilter }) {
   return (
     <>
-      {filters.map((el) => (
+      {filters.map((filter) => (
         <button
-          onClick={onSelectFilter}
-          key={el}
-          className={el === selected ? "btn selected" : "btn"}
+          onClick={() => onSelectFilter(filter)}
+          key={filter}
+          className={filter === selected ? "btn selected" : "btn"}
         >
-          {el}
+          {filter}
         </button>
       ))}
     </>

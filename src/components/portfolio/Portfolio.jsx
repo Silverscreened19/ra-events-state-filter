@@ -1,43 +1,45 @@
 import React from "react";
 import ProjectList from "../projectList/ProjectList";
 import Toolbar from "../toolbar/Toolbar";
+import { projectData } from "../../projectData";
 
 export class Portfolio extends React.Component {
-  state = { selected: "All" };
-
   constructor(props) {
     super(props);
-    this.filters = ["All", "Websites", "Flayers", "Business Cards"];
-    this.selected = this.state.selected;
-    this.select = this.select.bind(this);
-    this.projects = this.projects.bind(this);
+    this.projectData = projectData;
+    this.state = {
+      projects: projectData,
+      selected: "All",
+    };
+
+    this.onSelectFilter = this.onSelectFilter.bind(this);
   }
 
-  select(e) {
-    this.selected = e.target.innerText;
-    this.setState(() => ({ selected: this.selected }));
-  }
+  onSelectFilter(filter) {
+    let projectData = this.projectData;
 
-  projects = () => {
-    const { projectData } = this.props;
-    const project =
-      this.selected === "All"
-        ? projectData
-        : projectData.filter((el) => el.category === this.selected);
-    return project;
-  };
+    if (filter !== "All") {
+      projectData = this.projectData.filter(
+        (project) => project.category === filter
+      );
+    }
+
+    this.setState({
+      projects: projectData,
+      selected: filter,
+    });
+  }
 
   render() {
-    const projects = this.projects();
+    const { selected, projects } = this.state;
+
     return (
       <>
-        <div>
-          <Toolbar
-            selected={this.state.selected}
-            filters={this.filters}
-            onSelectFilter={this.select}
-          />
-        </div>
+        <Toolbar
+          filters={["All", "Websites", "Flayers", "Business Cards"]}
+          selected={selected}
+          onSelectFilter={this.onSelectFilter}
+        />
         <ProjectList project={projects} />
       </>
     );
